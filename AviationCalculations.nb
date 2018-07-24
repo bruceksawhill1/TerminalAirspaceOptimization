@@ -1,0 +1,1193 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     43091,       1185]
+NotebookOptionsPosition[     38724,       1038]
+NotebookOutlinePosition[     39230,       1058]
+CellTagsIndexPosition[     39187,       1055]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Aviation Formulae", "Title",
+ CellChangeTimes->{{3.567802784742585*^9, 3.567802788667404*^9}}],
+
+Cell["Preliminaries", "Subtitle",
+ CellChangeTimes->{{3.56780280523001*^9, 3.567802806727971*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["The Atmosphere", "Section",
+ CellChangeTimes->{{3.567802977620788*^9, 3.5678029935910254`*^9}}],
+
+Cell["\<\
+The atmosphere is a bipartite model, with one descriptor that applies from \
+ground to the bottom of the stratosphere, and another descriptor that applies \
+in the stratosphere.  This is beause the temperature changes below the \
+stratosphere and is constant in the stratosphere.  \
+\>", "Text",
+ CellChangeTimes->{{3.567802836093603*^9, 3.567802884968589*^9}, {
+  3.567802932932426*^9, 3.567802933129716*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Below the stratosphere", "Subsection",
+ CellChangeTimes->{{3.567803076317177*^9, 3.5678030809175053`*^9}}],
+
+Cell["\<\
+The stratosphere begins at 11000 meters and goes up far beyond the maximum \
+altitude of commercial aircraft.  11000 meters is 36089 feet.  To incorporate \
+the altitude dependence of temperature and its influence on pressure and \
+density, this factor of theta will need to be computed frequently.  It is \
+definited for STP (Standard Temperature and Pressure) atmosphere as (first \
+for feet and then for meters) as\
+\>", "Text",
+ CellChangeTimes->{{3.5678031135823517`*^9, 3.56780325255339*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"thetafeet", "=", 
+  RowBox[{"(", 
+   RowBox[{"1", "-", 
+    RowBox[{"6.875", " ", 
+     RowBox[{"10", "^", 
+      RowBox[{"-", "6"}]}], " ", "h"}]}], ")"}]}]], "Input",
+ CellChangeTimes->{{3.567802722148655*^9, 3.567802748005083*^9}, {
+  3.567803052232897*^9, 3.5678030529309196`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"1", "-", 
+  RowBox[{"6.874999999999999`*^-6", " ", "h"}]}]], "Output",
+ CellChangeTimes->{{3.567802742767218*^9, 3.567802748673864*^9}, 
+   3.567803411981141*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"thetameters", "=", 
+  RowBox[{"(", 
+   RowBox[{"1", "-", 
+    RowBox[{"2.255", " ", 
+     RowBox[{"10", "^", 
+      RowBox[{"-", "5"}]}], " ", "h"}]}], ")"}]}]], "Input",
+ CellChangeTimes->{{3.567803256114833*^9, 3.567803276745427*^9}}],
+
+Cell[BoxData[
+ RowBox[{"1", "-", 
+  RowBox[{"0.00002255`", " ", "h"}]}]], "Output",
+ CellChangeTimes->{{3.567803271542564*^9, 3.567803277212862*^9}, 
+   3.5726162737045717`*^9}]
+}, Open  ]],
+
+Cell["\<\
+We will need the air density as a function of altitude for almost all of our \
+calculations.  At sea level and 15 degrees C, the density is 1.2922 kg/m^3.  \
+There are correction factors for nonstandard sea level temperatures and lapse \
+rates (rate of temp change with altitude), they will be ignored for now. \
+Solving the ideal gas equilirium condition below 11 kilometers gives the air \
+density ratio (the ratio of density at altitude to density at sea level) as\
+\>", "Text",
+ CellChangeTimes->{{3.567803311429969*^9, 3.567803341278268*^9}, {
+  3.5678035314560738`*^9, 3.567803593331448*^9}, {3.567803637510583*^9, 
+  3.5678036496566277`*^9}, {3.567803693910633*^9, 3.5678037111195393`*^9}, {
+  3.567803912459114*^9, 3.56780394839221*^9}, {3.567804282028858*^9, 
+  3.567804299373312*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"densitylowfeet", "[", "h_", "]"}], ":=", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{"1", "-", 
+     RowBox[{"6.875", " ", 
+      RowBox[{"10", "^", 
+       RowBox[{"-", "6"}]}], " ", "h"}]}], ")"}], "^", "4.2541"}]}]], "Input",\
+
+ CellChangeTimes->{{3.5678033849897127`*^9, 3.567803406907462*^9}, {
+  3.5726160644860163`*^9, 3.572616068988965*^9}, {3.572616156669449*^9, 
+  3.5726161571154137`*^9}, {3.57307197101583*^9, 3.573071985219619*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"densitylowmeters", "[", "h_", "]"}], ":=", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{"1", "-", 
+     RowBox[{"2.255", " ", 
+      RowBox[{"10", "^", 
+       RowBox[{"-", "5"}]}], " ", "h"}]}], ")"}], "^", "4.2541"}]}]], "Input",\
+
+ CellChangeTimes->{{3.5678034174885693`*^9, 3.5678034239553623`*^9}, {
+  3.572616072918005*^9, 3.572616076483947*^9}, {3.572616160455007*^9, 
+  3.572616160756418*^9}, {3.573072000020602*^9, 3.573072004858395*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["In the stratosphere", "Subsection",
+ CellChangeTimes->{{3.5678034528828897`*^9, 3.567803473605324*^9}}],
+
+Cell["\<\
+In the stratosphere (above 11000 meters) the equation of state changes, and \
+the density ratio is given by:\
+\>", "Text",
+ CellChangeTimes->{{3.567803496556292*^9, 3.5678035223666286`*^9}, {
+  3.5678035636296263`*^9, 3.567803564004724*^9}, {3.567803726579494*^9, 
+  3.5678037356430883`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"densitystratfeet", "[", "h_", "]"}], ":=", 
+  RowBox[{"0.2971", " ", 
+   RowBox[{"Exp", "[", 
+    RowBox[{
+     RowBox[{"-", 
+      RowBox[{"(", 
+       RowBox[{"h", "-", "36089"}], ")"}]}], "/", "20806.7"}], 
+    "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.567803748637505*^9, 3.567803794171282*^9}, 
+   3.567804067300581*^9, {3.572616175220417*^9, 3.572616189122629*^9}, {
+   3.573072030734371*^9, 3.573072033893923*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"densitystratmeters", "[", "h_", "]"}], ":=", 
+  RowBox[{"0.2971", " ", 
+   RowBox[{"Exp", "[", 
+    RowBox[{
+     RowBox[{"-", 
+      RowBox[{"(", 
+       RowBox[{"h", "-", "11000"}], ")"}]}], "/", "6341.9"}], 
+    "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.567803809356579*^9, 3.5678038575708447`*^9}, 
+   3.567804063887437*^9, {3.572616181635638*^9, 3.572616183979775*^9}, {
+   3.573072039120623*^9, 3.573072049031054*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"densitymeters", "[", "h_", "]"}], ":=", 
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{"h", "<", "11000"}], ",", " ", 
+    RowBox[{"densitylowmeters", "[", "h", "]"}], ",", 
+    RowBox[{"densitystratmeters", "[", "h", "]"}]}], "]"}], " "}]], "Input",
+ CellChangeTimes->{{3.573071905838888*^9, 3.573071924270258*^9}, {
+   3.5730720142609167`*^9, 3.573072026969071*^9}, 3.573072058032642*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["A picture", "Subsection",
+ CellChangeTimes->{{3.567803982442622*^9, 3.5678039837676077`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"loweraltitude", "=", 
+   RowBox[{"Plot", "[", 
+    RowBox[{"densitylowmeters", ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"h", ",", "0", ",", "11000"}], "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", "15000"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "1"}], "}"}]}], "}"}]}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"upperaltitude", "=", 
+   RowBox[{"Plot", "[", 
+    RowBox[{"densitystratmeters", ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"h", ",", "11000", ",", "15000"}], "}"}]}], "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.5678039893416033`*^9, 3.567804030422041*^9}, {
+   3.567804124861999*^9, 3.5678042008183107`*^9}, {3.5726162065479803`*^9, 
+   3.572616216589201*^9}, 3.572616256580063*^9, 3.572616288043944*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Plot", "[", 
+  RowBox[{
+   RowBox[{"densitymeters", "[", "h", "]"}], ",", " ", 
+   RowBox[{"{", 
+    RowBox[{"h", ",", "0", ",", "15000"}], "}"}], ",", 
+   RowBox[{"AxesLabel", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"\"\<Altitude(m)\>\"", ",", " ", "\"\<Density Ratio\>\""}], 
+     "}"}]}], ",", 
+   RowBox[{"PlotRange", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"0", ",", "15000"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "1"}], "}"}]}], "}"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.567804078807535*^9, 3.567804088718961*^9}, {
+  3.5678042154844*^9, 3.567804243196369*^9}, {3.5730720761207123`*^9, 
+  3.573072114463594*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {}, 
+   {Hue[0.67, 0.6, 0.6], LineBox[CompressedData["
+1:eJwVxXk4lAkcAOBReTJD6aCEcm2xyRFKOvb3Y0WTaCmSSo+jYeWKJE90Sawm
+hJaExI5hTUlNqOQY34zr+6LIXRhyb18qLZuyu3+8z6vlGeR0YgGDwbD/z/9X
+6BiMDiiaQcXkjg/z8zSoyVt9MPJZgV6aximeczTUbD/fsthHG92i1a6KZ2hI
+dcqs/sQxwYMlxBHuFA1R7kXlYxwrJAXd4rWDNIQMPRQOcZzQOe9d0n4JDf78
+UhMpxxPXzC4ceM+lYSyufKqfE4Jvwu3c1dRo0HdtesowiEbc6n0zRu899EU7
+3nSN4uIC+mKyrt1fEG/kERnWnIyLwgUa/WcmgcOVSh1q09C8KOD665sTgGHF
+ylzPTOSrGvf8UT8O9/NzK/0f5qD1F1wZRo9B5k8FSlLdPHzcb9HspTEGv2W2
+/sIM5eFin22h7R6joBLixS+n+chaxpnWvTUC+UvWDK2x+hMnYkUp+6TDoOTM
+rG2IE6De1fw2A9Nh0FFyr5CRKcZL+pH+zyLeQfq+SSqM/wAjancYjbQMAd3Y
+02g4UoK5y/hXfNcNgfmdURVFrUfocPzcucLQQbjgIudWv1uIR9fn+BzplEIa
+261gd/RjvFFuaadlJoVijaqx20WlGGwa71mRPQBpm122lU6WIS3Yd1ZWZgCC
+brE6/9Z9gpGGWxQd/frBduil3wqHp8iWCl8IRX1A+zWxprjPsCDsJCvy7ltI
+a+vIKiitwOEjouysjDdglCpzObb7OTqYMI9eutML6YnHQjeursLz9TE3XH7v
+AYb5sP4BjWoctPSmk3jdoE6U/hBaVY2Jp21VRPwuMJ5TluQfrcGqcdkIweNO
+IHjf+23oGtzhtqtNubsDMODiAnaCCFPl1N+mfWyHnfnXssq0a5HwntqbpdkO
+xvHrByyEtXj4jKy1t+trUOC66q9zIvB8ztZD9jFt4DuvRAe+I9AzQUdRTtIK
+giS/J1oxYsy+32b9YPoVBKewv6GqBOcKYzXKVr2CTZZlY6ECCfolBLgq2ryE
+FoXKXjm7OtwTN6J8OLAFPrMd2Ky+Oow5sfnUkmPNwOCFVwRcqMdKj1iC+ZKC
+RUVGnUPqDVguFTyH4yTEaZ8KqC9uQOmhUVb4qib4XGbHXLq/EXsSXxSKRA3Q
+X1m8rnqwEb+6TMfmp9YDEZzbGxPWhPPRSkoTEXWQhIZ3760kUV6e4F1xlkDv
+pZ/7LPkkzpdpWF1xFMPyg9kdbYUkrjV7n7TKXgw2G2abfQQkHmLvaircI4bi
+xvvV10tINM24JdMKYri8UjW36xmJydc+BRkbikGP98H7VAuJZHqK3mp5MZyu
+zxrPmSXRpI4sTRYTUJgxIzWdI/HuwcLVVjUEvPU/0CP5TqJl/NyxjxUE2C5n
+kpMLKTxpvyfDWUiAqtvpe9uWUvh5BskNeQRUT+wNbtGmMDxky+SniwRMP+f5
+eq2n8KPm9oSSSAI2JjE8vuhS+GNA1YrgswSkmJU6qhtQOPwoUUQHEcCJ0jL1
+NafQbEqnfNadgNv7I/W/WlDIA9avlW4EtGh16CTspFDYOvtPtAsBFhKuktCS
+wttdFjXLHQgITB9RsLWm0GB803QXm4BcPyvZbhsKm6MCmXm7CejYmfXNn02h
+ylzzN39LAhQUZ6bn7Sh0atd+Zb6LgH8Bo65phQ==
+     "]]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{
+    FormBox["\"Altitude(m)\"", TraditionalForm], 
+    FormBox["\"Density Ratio\"", TraditionalForm]},
+  AxesOrigin->{0, 0},
+  PlotRange->{{0, 15000}, {0, 1}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{{3.567804089490943*^9, 3.5678041165825653`*^9}, 
+   3.5678041632180243`*^9, {3.567804227932288*^9, 3.5678042437218018`*^9}, {
+   3.5726162211970043`*^9, 3.5726162498101482`*^9}, 3.572616291273728*^9, {
+   3.573072094051856*^9, 3.573072115035677*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Aircraft Performance", "Subtitle",
+ CellChangeTimes->{{3.573067472100278*^9, 3.57306747375368*^9}, {
+  3.573067503928762*^9, 3.57306750845338*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Lift and Drag", "Section",
+ CellChangeTimes->{{3.567802977620788*^9, 3.5678029935910254`*^9}, {
+  3.573067556530555*^9, 3.5730675580190353`*^9}}],
+
+Cell["\<\
+A set of numbers is required to quantify the aerodynamic performance of a \
+given aircraft independent of its engine  parameters under several different \
+operating regimes (climb, cruise, flaps at various extensions, dirty (gear \
+down), clean, etc).  The simplest approximation to the Lift/Drag relationship \
+is a quadratic equation.  In addition, we need the effective wing area to \
+compute lift, the reference aircraft mass (to know how much lift we need to \
+stay aloft), the speed of the aircraft (which affects aerodynamic forces), \
+the density of the atmosphere (to compute magnitudes of lift and drag), the \
+acceleration of the aircraft (banked or not), and the effect of departures \
+from effective mass.\
+\>", "Text",
+ CellChangeTimes->{{3.573069894361723*^9, 3.573070034147995*^9}, {
+  3.5730700689263773`*^9, 3.573070087935627*^9}, {3.573071747606615*^9, 
+  3.57307180619193*^9}, {3.573072811709758*^9, 3.5730729227372007`*^9}, {
+  3.5731735472656612`*^9, 3.573173548582823*^9}}],
+
+Cell["\<\
+The lift is given by the fraction of the \"flat plane\" force required to \
+balance the force of gravity on the aircraft where m is the mass of the \
+aircraft in kg, h is altitude (meters), v is speed in meters/sec, s is wing \
+area in meters^2, and \[Phi] is the bank angle. (banking reduces the \
+effective lifting area, thereby increasing the amount of lift required per \
+unit area).\
+\>", "Text",
+ CellChangeTimes->{{3.5731725264704*^9, 3.573172554717966*^9}, {
+  3.573172648881378*^9, 3.573172673143976*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"cl", "[", 
+   RowBox[{"m_", ",", "v_", ",", "h_", ",", "\[Phi]_", ",", "s_"}], "]"}], ":=", 
+  RowBox[{"2", " ", "m", " ", 
+   RowBox[{"9.80665", "/", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"densitymeters", "[", "h", "]"}], " ", 
+      RowBox[{"v", "^", "2"}], " ", "s", " ", 
+      RowBox[{"Cos", "[", "\[Phi]", "]"}]}], ")"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.573072697170884*^9, 3.573072701797572*^9}, {
+  3.573073004248898*^9, 3.573073119615362*^9}, {3.5730735172816153`*^9, 
+  3.5730735262144117`*^9}, {3.5730735800071697`*^9, 3.573073582004671*^9}}],
+
+Cell["\<\
+Cos[\[Phi]] can be computed as a function of parametric representations of x \
+and y velocities and accelerations inducing the banking after one calculates \
+the parametric radius of curvature of the trajectory.  The turn radius R is \
+given by:\
+\>", "Text",
+ CellChangeTimes->{{3.573067519940875*^9, 3.57306752442832*^9}, {
+  3.573073131210202*^9, 3.573073220563857*^9}, {3.573171305455758*^9, 
+  3.573171329914104*^9}, {3.5731717849858723`*^9, 3.573171855981833*^9}, {
+  3.57317192746917*^9, 3.573171965371111*^9}, {3.5731726916950073`*^9, 
+  3.5731726928931637`*^9}, {3.573173515197456*^9, 3.573173518570902*^9}}],
+
+Cell[TextData[Cell[BoxData[
+ RowBox[{
+  RowBox[{"rxy", "[", 
+   RowBox[{"vx_", ",", "vy_", ",", "ax_", ",", "ay_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"vx", "^", "2"}], "+", 
+      RowBox[{"vy", "^", "2"}]}], ")"}], "^", 
+    RowBox[{"(", 
+     RowBox[{"3", "/", "2"}], ")"}]}], "/", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"vx", " ", "ay"}], "-", 
+     RowBox[{"vy", " ", "ax"}]}], ")"}]}]}]], "Input",
+ CellChangeTimes->{{3.573171004666985*^9, 3.5731710690048733`*^9}, {
+  3.573171150156389*^9, 3.5731711587932987`*^9}}]], "Text",
+ CellChangeTimes->{{3.573067519940875*^9, 3.57306752442832*^9}, {
+   3.573073131210202*^9, 3.573073220563857*^9}, {3.573171305455758*^9, 
+   3.573171329914104*^9}, {3.5731717849858723`*^9, 3.573171855981833*^9}, {
+   3.57317192746917*^9, 3.573171965371111*^9}, {3.5731719979556313`*^9, 
+   3.573172023023937*^9}, 3.573172614671397*^9, {3.573172743634925*^9, 
+   3.57317278080663*^9}, 3.57317348143233*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"rxy", "[", 
+  RowBox[{"vx", ",", "vy", ",", "ax", ",", "ay"}], "]"}]], "Input",
+ CellChangeTimes->{{3.573173485433311*^9, 3.5731734888856297`*^9}}],
+
+Cell[BoxData[
+ FractionBox[
+  SuperscriptBox[
+   RowBox[{"(", 
+    RowBox[{
+     SuperscriptBox["vx", "2"], "+", 
+     SuperscriptBox["vy", "2"]}], ")"}], 
+   RowBox[{"3", "/", "2"}]], 
+  RowBox[{
+   RowBox[{"ay", " ", "vx"}], "-", 
+   RowBox[{"ax", " ", "vy"}]}]]], "Output",
+ CellChangeTimes->{3.57317348927588*^9}]
+}, Open  ]],
+
+Cell["\<\
+A sample of a radius at typical speeds and a very gentle acceleration yields \
+a big radius:\
+\>", "Text",
+ CellChangeTimes->{{3.573173672071004*^9, 3.573173715457402*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"rxy", "[", 
+  RowBox[{"240", ",", "0", ",", "0", ",", "1"}], "]"}]], "Input",
+ CellChangeTimes->{{3.573173683062047*^9, 3.573173689897974*^9}}],
+
+Cell[BoxData["57600"], "Output",
+ CellChangeTimes->{3.573173690474249*^9}]
+}, Open  ]],
+
+Cell["A harder bank yields a smaller circle", "Text",
+ CellChangeTimes->{{3.573173725733349*^9, 3.573173731682391*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"rxy", "[", 
+  RowBox[{"240", ",", "0", ",", "0", ",", "10"}], "]"}]], "Input",
+ CellChangeTimes->{3.573173741788042*^9}],
+
+Cell[BoxData["5760"], "Output",
+ CellChangeTimes->{3.5731737421987953`*^9}]
+}, Open  ]],
+
+Cell["\<\
+The approximation to second order for the cosine of the arctan of v^2/gR (the \
+bank angle) is:\
+\>", "Text",
+ CellChangeTimes->{{3.573067519940875*^9, 3.57306752442832*^9}, {
+   3.573073131210202*^9, 3.573073220563857*^9}, {3.573171305455758*^9, 
+   3.573171329914104*^9}, {3.5731717849858723`*^9, 3.573171855981833*^9}, {
+   3.57317192746917*^9, 3.573171965371111*^9}, {3.5731719979556313`*^9, 
+   3.573172023023937*^9}, 3.573172614671397*^9, {3.573172743634925*^9, 
+   3.57317278080663*^9}, 3.57317348143233*^9, {3.5731735692579927`*^9, 
+   3.573173569596281*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"cphi", "[", 
+   RowBox[{"vx_", ",", "vy_", ",", "ax_", ",", "ay_"}], "]"}], ":=", 
+  RowBox[{"Series", "[", 
+   RowBox[{
+    RowBox[{"Cos", "[", 
+     RowBox[{"ArcTan", "[", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"vx", "^", "2"}], "+", 
+         RowBox[{"vy", "^", "2"}]}], ")"}], "/", 
+       RowBox[{"(", 
+        RowBox[{"9.80665", " ", 
+         RowBox[{"rxy", "[", 
+          RowBox[{"vx", ",", "vy", ",", "ax", ",", "ay"}], "]"}]}], ")"}]}], 
+      "]"}], "]"}], ",", " ", 
+    RowBox[{"{", 
+     RowBox[{"x", ",", "0", ",", "2"}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.5731714860521793`*^9, 3.573171539929199*^9}, {
+  3.573171581019463*^9, 3.573171655094767*^9}, {3.573171878807313*^9, 
+  3.573171898807364*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"cphi", "[", 
+  RowBox[{"vx", ",", "vy", ",", "ax", ",", "ay"}], "]"}]], "Input",
+ CellChangeTimes->{{3.573173456273117*^9, 3.57317346228331*^9}}],
+
+Cell[BoxData[
+ FractionBox["1", 
+  SqrtBox[
+   RowBox[{"1", "+", 
+    FractionBox[
+     RowBox[{"0.010398211550100477`", " ", 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"ay", " ", "vx"}], "-", 
+         RowBox[{"ax", " ", "vy"}]}], ")"}], "2"]}], 
+     RowBox[{
+      SuperscriptBox["vx", "2"], "+", 
+      SuperscriptBox["vy", "2"]}]]}]]]], "Output",
+ CellChangeTimes->{3.573173463168932*^9}]
+}, Open  ]],
+
+Cell["A sample of a slight bank:", "Text",
+ CellChangeTimes->{{3.573173594696906*^9, 3.573173622070195*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"cphi", "[", 
+  RowBox[{"240", ",", "0", ",", "0", ",", "1"}], "]"}]], "Input",
+ CellChangeTimes->{{3.573173603226555*^9, 3.573173631776313*^9}}],
+
+Cell[BoxData["0.994841092104557`"], "Output",
+ CellChangeTimes->{{3.573173614341357*^9, 3.573173632636561*^9}}]
+}, Open  ]],
+
+Cell["\<\
+Banking hard enough to produce a centripetal force equal to that of gravity \
+should produce a 45 degree bank angle and therefore a cosine equal to \
+1/Sqrt[2]\
+\>", "Text",
+ CellChangeTimes->{{3.573174435784317*^9, 3.573174480022625*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"cphi", "[", 
+  RowBox[{"240", ",", "0", ",", "0", ",", "9.8"}], "]"}]], "Input",
+ CellChangeTimes->{{3.573174488887248*^9, 3.573174490410667*^9}}],
+
+Cell[BoxData["0.7073465703596196`"], "Output",
+ CellChangeTimes->{3.573174492150991*^9}]
+}, Open  ]],
+
+Cell["Now the lift coefficient is fully parametrized", "Text",
+ CellChangeTimes->{{3.573172080429585*^9, 3.573172086608384*^9}, {
+  3.573172804231728*^9, 3.573172804969388*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"cl", "[", 
+   RowBox[{
+   "m_", ",", "h_", ",", "s_", ",", "vx_", ",", "vy_", ",", "ax_", ",", 
+    "ay_"}], "]"}], ":=", 
+  RowBox[{"2", " ", "m", " ", 
+   RowBox[{"9.80665", "/", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"densitymeters", "[", "h", "]"}], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"vx", "^", "2"}], "+", 
+        RowBox[{"vy", "^", "2"}]}], ")"}], " ", "s", " ", 
+      RowBox[{"cphi", "[", 
+       RowBox[{"vx", ",", "vy", ",", "ax", ",", "ay"}], "]"}]}], 
+     ")"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.573172091337811*^9, 3.57317215239353*^9}, {
+   3.573172184135873*^9, 3.573172192446349*^9}, {3.57317223170772*^9, 
+   3.5731722656218147`*^9}, 3.573172306383811*^9, {3.573172937689104*^9, 
+   3.573172938447798*^9}, {3.573174168899634*^9, 3.573174186661189*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"cl", "[", 
+  RowBox[{
+  "m", ",", "h", ",", "s", ",", "vx", ",", "vy", ",", "ax", ",", "ay"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.5731722714730043`*^9, 3.573172285257251*^9}, {
+  3.5731729458875723`*^9, 3.573172946082356*^9}, {3.5731741943609333`*^9, 
+  3.573174194597972*^9}}],
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{"19.6133`", " ", "m", " ", 
+   SqrtBox[
+    RowBox[{"1", "+", 
+     FractionBox[
+      RowBox[{"0.010398211550100477`", " ", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"ay", " ", "vx"}], "-", 
+          RowBox[{"ax", " ", "vy"}]}], ")"}], "2"]}], 
+      RowBox[{
+       SuperscriptBox["vx", "2"], "+", 
+       SuperscriptBox["vy", "2"]}]]}]]}], 
+  RowBox[{"s", " ", 
+   RowBox[{"(", 
+    RowBox[{
+     SuperscriptBox["vx", "2"], "+", 
+     SuperscriptBox["vy", "2"]}], ")"}], " ", 
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{"h", "<", "11000"}], ",", 
+     RowBox[{"densitylowmeters", "[", "h", "]"}], ",", 
+     RowBox[{"densitystratmeters", "[", "h", "]"}]}], "]"}]}]]], "Output",
+ CellChangeTimes->{3.573172868746509*^9, 3.5731729475470057`*^9, 
+  3.573174195811791*^9}]
+}, Open  ]],
+
+Cell["\<\
+But we need drag to know how much thrust (and therefore how much fuel we need \
+to burn) is required.  The coefficients of drag and lift are related to \
+lowest order by the \"drag polar\"\
+\>", "Text",
+ CellChangeTimes->{{3.5731730485323963`*^9, 3.573173078845501*^9}, {
+  3.573174217237241*^9, 3.573174219047563*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"cd", "[", 
+   RowBox[{
+   "cd0_", ",", "cd2_", ",", "m_", ",", "h_", ",", "vx_", ",", "vy_", ",", 
+    "ax_", ",", "ay_", ",", "s_"}], "]"}], ":=", 
+  RowBox[{"cd0", "+", 
+   RowBox[{"cd2", " ", 
+    RowBox[{
+     RowBox[{"cl", "[", 
+      RowBox[{
+      "m", ",", "h", ",", "s", ",", "vx", ",", "vy", ",", "ax", ",", "ay"}], 
+      "]"}], "^", "2"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.573072467376665*^9, 3.5730725283850946`*^9}, {
+   3.5730725852994556`*^9, 3.57307258541066*^9}, 3.573072670826458*^9, 
+   3.573072711119842*^9, {3.573072971013811*^9, 3.5730729839891*^9}, {
+   3.573073335805994*^9, 3.573073340465025*^9}, {3.5730733724966173`*^9, 
+   3.573073374838347*^9}, {3.573073682341107*^9, 3.573073712004974*^9}, 
+   3.57317292151046*^9, {3.573172954073217*^9, 3.57317297215849*^9}, {
+   3.573174225701907*^9, 3.573174236360608*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"cd", "[", 
+  RowBox[{
+  "cd0", ",", "cd2", ",", "m", ",", "h", ",", "vx", ",", "vy", ",", "ax", ",",
+    "ay", ",", "s"}], "]"}]], "Input",
+ CellChangeTimes->{{3.5731733730163803`*^9, 3.5731733831706257`*^9}, {
+  3.5731742465602913`*^9, 3.573174246797852*^9}}],
+
+Cell[BoxData[
+ RowBox[{"cd0", "+", 
+  FractionBox[
+   RowBox[{"384.68153688999996`", " ", "cd2", " ", 
+    SuperscriptBox["m", "2"], " ", 
+    RowBox[{"(", 
+     RowBox[{"1", "+", 
+      FractionBox[
+       RowBox[{"0.010398211550100477`", " ", 
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"ay", " ", "vx"}], "-", 
+           RowBox[{"ax", " ", "vy"}]}], ")"}], "2"]}], 
+       RowBox[{
+        SuperscriptBox["vx", "2"], "+", 
+        SuperscriptBox["vy", "2"]}]]}], ")"}]}], 
+   RowBox[{
+    SuperscriptBox["s", "2"], " ", 
+    SuperscriptBox[
+     RowBox[{"(", 
+      RowBox[{
+       SuperscriptBox["vx", "2"], "+", 
+       SuperscriptBox["vy", "2"]}], ")"}], "2"], " ", 
+    SuperscriptBox[
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"h", "<", "11000"}], ",", 
+       RowBox[{"densitylowmeters", "[", "h", "]"}], ",", 
+       RowBox[{"densitystratmeters", "[", "h", "]"}]}], "]"}], 
+     "2"]}]]}]], "Output",
+ CellChangeTimes->{3.573173383766697*^9, 3.573174248440689*^9}]
+}, Open  ]],
+
+Cell["\<\
+The drag is given by (in MKS units, where speed v is in m/sec, wing area s in \
+meters^2, altitude h in meters)\
+\>", "Text",
+ CellChangeTimes->{{3.573071812478478*^9, 3.57307181545334*^9}, {
+  3.573072765487288*^9, 3.5730727778470297`*^9}, {3.573072940023593*^9, 
+  3.573072966161079*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"drag", "[", 
+   RowBox[{
+   "h_", ",", "s_", ",", " ", "cd0_", ",", "cd2_", ",", "m_", ",", "vx_", ",",
+     "vy_", ",", "ax_", ",", "ay_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"1", "/", "2"}], " ", 
+   RowBox[{"densitymeters", "[", "h", "]"}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"vx", "^", "2"}], "+", 
+     RowBox[{"vy", "^", "2"}]}], ")"}], " ", "s", " ", 
+   RowBox[{"cd", "[", 
+    RowBox[{
+    "cd0", ",", "cd2", ",", "m", ",", "h", ",", "vx", ",", "vy", ",", "ax", 
+     ",", "ay", ",", "s"}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.573071825385038*^9, 3.573071831604642*^9}, {
+   3.573072126570668*^9, 3.5730721623331747`*^9}, {3.573072231484809*^9, 
+   3.573072284844194*^9}, {3.573072391201585*^9, 3.57307239312313*^9}, {
+   3.57307243568502*^9, 3.57307244489717*^9}, {3.573073386128229*^9, 
+   3.5730734109140787`*^9}, {3.573073765945159*^9, 3.57307377303977*^9}, {
+   3.5731730080495033`*^9, 3.573173026358459*^9}, 3.573174040753125*^9, {
+   3.5731742626010017`*^9, 3.57317428301374*^9}}],
+
+Cell["", "Text",
+ CellChangeTimes->{{3.5730724534600782`*^9, 3.573072463058752*^9}, {
+   3.573072986672709*^9, 3.573072989260285*^9}, 3.573173072631587*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"drag", "[", 
+  RowBox[{
+  "h", ",", "s", ",", "cd0", ",", "cd2", ",", "m", ",", "vx", ",", "vy", ",", 
+   "ax", ",", "ay"}], "]"}]], "Input",
+ CellChangeTimes->{{3.573173105617589*^9, 3.5731731176853113`*^9}, {
+  3.573174290350412*^9, 3.573174290498719*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  FractionBox["1", "2"], " ", "s", " ", 
+  RowBox[{"(", 
+   RowBox[{
+    SuperscriptBox["vx", "2"], "+", 
+    SuperscriptBox["vy", "2"]}], ")"}], " ", 
+  RowBox[{"(", 
+   RowBox[{"cd0", "+", 
+    FractionBox[
+     RowBox[{"384.68153688999996`", " ", "cd2", " ", 
+      SuperscriptBox["m", "2"], " ", 
+      RowBox[{"(", 
+       RowBox[{"1", "+", 
+        FractionBox[
+         RowBox[{"0.010398211550100477`", " ", 
+          SuperscriptBox[
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"ay", " ", "vx"}], "-", 
+             RowBox[{"ax", " ", "vy"}]}], ")"}], "2"]}], 
+         RowBox[{
+          SuperscriptBox["vx", "2"], "+", 
+          SuperscriptBox["vy", "2"]}]]}], ")"}]}], 
+     RowBox[{
+      SuperscriptBox["s", "2"], " ", 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{
+         SuperscriptBox["vx", "2"], "+", 
+         SuperscriptBox["vy", "2"]}], ")"}], "2"], " ", 
+      SuperscriptBox[
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"h", "<", "11000"}], ",", 
+         RowBox[{"densitylowmeters", "[", "h", "]"}], ",", 
+         RowBox[{"densitystratmeters", "[", "h", "]"}]}], "]"}], "2"]}]]}], 
+   ")"}], " ", 
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{"h", "<", "11000"}], ",", 
+    RowBox[{"densitylowmeters", "[", "h", "]"}], ",", 
+    RowBox[{"densitystratmeters", "[", "h", "]"}]}], "]"}]}]], "Output",
+ CellChangeTimes->{3.573173118920191*^9, 3.573174291084983*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"drag", "[", 
+  RowBox[{
+  "10000", ",", "  ", "124.65", ",", " ", ".0254", ",", " ", ".0358", ",", 
+   "65300", ",", "240", ",", "0", ",", "0", ",", "0"}], "]"}]], "Input",
+ CellChangeTimes->{{3.573073253031942*^9, 3.5730732722253513`*^9}, {
+  3.573073428425674*^9, 3.573073488990326*^9}, {3.5731731897757463`*^9, 
+  3.5731731963863983`*^9}, {3.573173259688315*^9, 3.57317326434538*^9}, {
+  3.573173312959299*^9, 3.573173344208104*^9}, {3.573174298890698*^9, 
+  3.573174312957857*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Power", "::", "\<\"infy\"\>"}], ":", 
+  " ", "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Infinite expression \\\\\\\"\\\", \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(1\\/0\\), \\\"MT\\\"]\\)\
+\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" encountered.\\\\\\\"\\\", \
+\\\"MT\\\"]\\) \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/infy\\\", ButtonNote -> \
+\\\"Power::infy\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{
+  3.5731733449266987`*^9, {3.573174300615037*^9, 3.573174313703732*^9}}],
+
+Cell[BoxData["42874.86707198016`"], "Output",
+ CellChangeTimes->{{3.5730732733863783`*^9, 3.573073300418788*^9}, 
+   3.573073489667478*^9, {3.573073588448488*^9, 3.573073605373642*^9}, 
+   3.573073719760763*^9, 3.573073779833247*^9, 3.5731731988239202`*^9, {
+   3.5731732537402697`*^9, 3.57317326545645*^9}, {3.573173315646749*^9, 
+   3.573173344928444*^9}, {3.5731743006433983`*^9, 3.573174313707052*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Thrust", "Section",
+ CellChangeTimes->{{3.567802977620788*^9, 3.5678029935910254`*^9}, {
+  3.573067556530555*^9, 3.5730675580190353`*^9}, {3.573067799218481*^9, 
+  3.573067800004075*^9}}],
+
+Cell["\<\
+The maximum climb thrust is a quadratic polynomial in altitude (h).  It is \
+given in general form as:\
+\>", "Text",
+ CellChangeTimes->{{3.573067814542507*^9, 3.573067842729311*^9}, {
+  3.5730705758497047`*^9, 3.573070577137554*^9}, {3.573071091830282*^9, 
+  3.573071092639411*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"maxclimbthrust", "[", 
+   RowBox[{"c1_", ",", "c2_", ",", "c3_", ",", "h_"}], "]"}], ":=", 
+  RowBox[{"c1", "-", 
+   RowBox[{
+    RowBox[{"c1", "/", "c2"}], " ", "h"}], "+", 
+   RowBox[{"c1", " ", "c3", " ", 
+    RowBox[{"h", "^", "2"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.5730678491356487`*^9, 3.573067866110202*^9}, {
+  3.573067900047777*^9, 3.573067927645176*^9}, {3.573068111968974*^9, 
+  3.573068112107564*^9}, {3.573070611451395*^9, 3.573070613301138*^9}, {
+  3.5730710952290993`*^9, 3.573071096565831*^9}}],
+
+Cell["\<\
+where thrust is in Newtons (N), altitude (h) in ft,  c1 is in Newtons, c1/c2 \
+in Newton-ft, c1 c3 in Newton/ft^2.  For our B-737-800, c1 = 146590 N, c2 = \
+53872 ft, c3 = 0.30453 10^-9/ft^2.\
+\>", "Text",
+ CellChangeTimes->{{3.5730679803957376`*^9, 3.5730680122681*^9}, {
+   3.5730680456184387`*^9, 3.573068069054255*^9}, {3.5730681165067387`*^9, 
+   3.5730681361970673`*^9}, {3.57306819192015*^9, 3.573068245557414*^9}, {
+   3.5730682849227257`*^9, 3.5730682856821947`*^9}, 3.573068328093553*^9, {
+   3.573070182612856*^9, 3.573070198585939*^9}, {3.5730702445266037`*^9, 
+   3.5730703026985826`*^9}, {3.573070504887895*^9, 3.573070533461856*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"maxclimbthrust", "[", 
+  RowBox[{"146590", ",", "53872", ",", 
+   RowBox[{"0.30453", " ", 
+    RowBox[{"10", "^", 
+     RowBox[{"(", 
+      RowBox[{"-", "10"}], ")"}]}]}], ",", "h"}], "]"}]], "Input",
+ CellChangeTimes->{{3.5730703076036463`*^9, 3.573070483390052*^9}, {
+  3.5730710994659986`*^9, 3.573071099990382*^9}}],
+
+Cell[BoxData[
+ RowBox[{"146590", "-", 
+  FractionBox[
+   RowBox[{"73295", " ", "h"}], "26936"], "+", 
+  RowBox[{"4.46410527`*^-6", " ", 
+   SuperscriptBox["h", "2"]}]}]], "Output",
+ CellChangeTimes->{
+  3.573070443189824*^9, {3.573070473248135*^9, 3.573070484232051*^9}, 
+   3.5730706196176567`*^9, 3.573071106895306*^9}]
+}, Open  ]],
+
+Cell["\<\
+A version of this where altitude is measured in meters is given by:\
+\>", "Text",
+ CellChangeTimes->{{3.573070673127195*^9, 3.573070683149528*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"maxclimbthrustmetric", "[", 
+   RowBox[{"c1_", ",", "c2_", ",", "c3_", ",", "h_"}], "]"}], ":=", 
+  RowBox[{"c1", "-", 
+   RowBox[{
+    RowBox[{"c1", "/", "c2"}], " ", "h", " ", "3.28084"}], "+", 
+   RowBox[{"c1", " ", "c3", " ", 
+    RowBox[{"h", "^", "2"}], " ", "10.7639"}]}]}]], "Input",
+ CellChangeTimes->{{3.573070648212245*^9, 3.573070663490218*^9}, {
+  3.573070708521212*^9, 3.573070737868931*^9}, {3.573071111343148*^9, 
+  3.573071111804038*^9}}],
+
+Cell["For the Boeing 737-800,", "Text",
+ CellChangeTimes->{{3.5730707836274548`*^9, 3.57307078865079*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"t737", "=", 
+  RowBox[{"maxclimbthrustmetric", "[", 
+   RowBox[{"146590", ",", "53872", ",", 
+    RowBox[{"0.30453", " ", 
+     RowBox[{"10", "^", 
+      RowBox[{"(", 
+       RowBox[{"-", "10"}], ")"}]}]}], ",", "h"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.573070744405538*^9, 3.573070759603403*^9}, {
+  3.573070809390216*^9, 3.5730708153267117`*^9}, {3.573071115554764*^9, 
+  3.5730711160161123`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"146590", "-", 
+  RowBox[{"8.927426782001781`", " ", "h"}], "+", 
+  RowBox[{"0.000048051182715753`", " ", 
+   SuperscriptBox["h", "2"]}]}]], "Output",
+ CellChangeTimes->{3.573070761596075*^9, 3.573070817112219*^9, 
+  3.573071116876573*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Plot", "[", 
+  RowBox[{"t737", ",", " ", 
+   RowBox[{"{", 
+    RowBox[{"h", ",", " ", "0", ",", " ", "13000"}], "}"}], ",", " ", 
+   RowBox[{"AxesLabel", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"\"\<Altitude (m)\>\"", ",", " ", "\"\<Thrust (N)\>\""}], 
+     "}"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.57307079369531*^9, 3.573070917665598*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {}, 
+   {Hue[0.67, 0.6, 0.6], LineBox[CompressedData["
+1:eJwV0v8/1AcAx/E75Ms0X0JDkjzSt4cdaawi3h95kNZhSD0I8621ZqlF7LGl
+MyVf+r5DX2gitKLuVmEV3fl6n0JFoTnf7uPuciF3HM7XtR9ej+c/8FodGecf
+o0aj0Zif+t+w0+cszaI2uTG2rp39OEgn3pUVt+tJ9NFrf8+5naITRQ6EFyle
+hWTLvScrRHQiXamXUiK2w4VuXYMT/XRipkO5MlvsBqWQtvczIZ144PVD7Fmx
+L17Pmf5q004nDGhFRunicDRx6BZhfDrhKnSTnhbHoXToIa8rn05oSILNkm6w
+cCaznVj0oxPJxZ7hEk46OkoTr/+sQyesTR3aYpgXoU/1f36yjkYoqjcyN19h
+Y9z9xrG3iTRCozngetnVKxD/qdYWu4lGpD6W8GnyPPR0aodyni8i0EvnK+1r
+BUi9mjzOc1xERkzlmDinEPuVsvXOdxcwceyaGbfmFqwsyoOOmyyAVWFi28Yv
+gZS9rkYvcx59P4YuvHp8G4MluVsE9HkkGP7rUt17B1m/eOuEHJ6D7YfR6MWe
+MtiPfhGzWTwL80dbVAzt+ziz65Clym8WI0mlay3ZHPScsL4kfTaDMG5yw8tL
+XCx15zPVt85AFnHEfPrW3xB+H+lvU6pCmi0j+kXxAziyT3kcXKWCa5xmtMnT
+h3gfb5zfcHYa4R/qd/i0PEJKFsvbfX4Kl1J8TR2aK/BGnZXWlDiF3gsThWf7
+K6F/QmbPkk7CpSrG+rKoCqJwB7pjxCTUzatT0vr+QWC6zHesRwnxOCNXLn8M
+aAnjp3yV6JLG3tRSPEHXTJIm9WICkoCGCLZWNdo2HEpmbJ9AmEpdzcC0Bitl
+eZbp3HFIq/RynZY/wxLyXl+53Tg8p83kQ8Y8LKtO+G13kQJWN5cZns/mISnb
+teuOlQL3DywU/GXER3Hm+SsLBXLsPjiVxcrjg5/YkEUtl0N+PEhua1ELnaKR
+7CM5Yyji13LZJbUI3N70plB3DGFm2cOv19UhqlsQP2D8Ea3ngnPTSurwvMLv
+wB7TUXzj+mX+pF09dLvzbntojeD1bMxKF049Giv7OM46w4hW3p12cW6AxLrV
+uWNShjJd8Y5HdQ0YeXLYa59sCHOMUzrqOxrB6kQsd+w9gs/bb1za0og7Ex7G
+/SIpeDPuDTJmEz4+e6XZIpWgO3XnKzQ3YZPBE2GcQgwN7xAn/z0CeEoXVaZD
+g3Bc8Wb51rcC7M5JnvNTUMjRCHKI7xTAqX1Nl8YohcmRTub9dwJkuCTWVQ1R
+qOJ1n7LpFSCcbUVaDVBwOUApDKUCDOw7fVH+koIHV9EqmxbAzTFXP6ecQoCX
+4Zk8CxL7nYWtsoMUHtr/UdhpSWLDEu2CgmgKxuYmNctWk4iY7WMFfUehY9hU
+mW5Dgv4T+2jtXgrBl62iEhgkzGP09a97UojssXPzAYmC28xtvmso1DVygzPc
+SYi2uGhqWlFYw9l8vN6DRJayY+DpCgqS378u3+ZNwmDCQLDRiMKh9W4r1vmT
+kC/J9dNSo/DCkO8UGUgiViW5WjMvgu2su39+EAmmGaVIUIkw2uKZYRRCwqu3
+r31wTATfSsEtn1ASoan9IXnDInAKdvEywkkIA8+NB7wXwSCzubs+gkS9v+Sa
+7qAIR4/5TC1GkZ9+//BtXZ8I/wGPs3Mb
+     "]]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{
+    FormBox["\"Altitude (m)\"", TraditionalForm], 
+    FormBox["\"Thrust (N)\"", TraditionalForm]},
+  AxesOrigin->{0, 40000.},
+  PlotRange->{{0, 13000}, {38654.103749984984`, 146589.99763149902`}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], 
+    Scaled[0.02]}]], "Output",
+ CellChangeTimes->{{3.573070828612956*^9, 3.573070863898704*^9}, 
+   3.573070918384705*^9, 3.5730711204820843`*^9}]
+}, Open  ]],
+
+Cell["\<\
+Or, plotted as a fraction of maximum sea level thrust it becomes clear that \
+there will be a maximum altitude beyond which there is insufficient thrust to \
+overcome drag and continue climbing:\
+\>", "Text",
+ CellChangeTimes->{{3.5730711290659933`*^9, 3.573071137789473*^9}, {
+  3.57307165263246*^9, 3.5730716868555183`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Plot", "[", 
+  RowBox[{
+   RowBox[{"t737", "/", "146590."}], ",", " ", 
+   RowBox[{"{", 
+    RowBox[{"h", ",", " ", "0", ",", " ", "13000"}], "}"}], ",", "  ", 
+   RowBox[{"AxesLabel", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"\"\<Altitude (m)\>\"", ",", " ", "\"\<Thrust Fraction\>\""}], 
+     "}"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.573071141347761*^9, 3.573071204609433*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {}, 
+   {Hue[0.67, 0.6, 0.6], LineBox[CompressedData["
+1:eJwVi3sw1AkcwHdwUWpLHmeFYg6N9uikrtOe7/eoXOd1h3RRdrLW1GF0STXd
+cPQQXULWI5Uroat0dktLpHY991fU/jzTIq/dZXfZdrMhDef++Mznj8987CLj
+g9h6FArFf4n/HXE+05bG+gbmwoJnFhfV0FdR1kmVrcbCq21CvQU13Hb7wYeQ
+rkex62DOF5/VkK6jppZLXXEV64WX8awaPvXobPKkgHVjLXKL92p45HMk9pI0
+EMdCfvZ0HVLDGspt03QpE+PGS22iBGrw7Af5eWk8+vWHlA2mqMFAFkY7VZyC
+B9ztVUdnpiC5bDdTxk3HD+K84qSTU2Bv6dbB9s9GQ5c4KfvTJGjrnf23FHLQ
+YQWr+MuESTBoC75WcbUQpwYkaS46FZytlQkpmutonPS0Z0OcCkJ8lrsbFd3E
+jZV6BTq5EjLY1e+l+SVoZpfbSotVwnRCEY33rBSv6GfxXWUKSOGb0zuE5Vi8
+6Qzl4hEFvIs5uCCu/QfpWvdsrnoCEk3eMuoH7+GvJbI7gzETQFdORS0OVGAm
+s35yh2YcrB5vn3MxqsT9r1eXPowdh8lTdxxtOVxUbMKTnxVyiOAlN7/O4aGe
+9oGIeUwOikNHrWZLH+KDIQmpVcsgje4S9bLsEVZ9P+DLOSEDz/hlUeZPq7CC
+Sp4++UEKTGWTd0D7Yxy59JzpkCCFnNRAS7c2Pu5lk6qX82MwmDVdcmmoGnnP
+OVkvTo8Bo4Ztf2WkBtt0OwV8vTHQt6pPTXv3BB36zxzblzkK0g8uBRpNLdId
+hauiqaPwRh57y1Bbh87VJRT/whGQBTcf4hjW42iCou2R5QhEzOnrrbF8hpq7
+o9Pd14ZBXkMt2GbxHN2c7OpqnYZh9yxNM2EmwOF/m+5vvTcEG26tNbmcJ8D9
+CxEbD28dgsrohZt3TYVYlL2+5s+0d+B3eOavlOtCjC2OnU/LGgTNiVAN3boB
+Jz34Rp13B+C2sIHHKW/A9rc2T4p4/RBBy1ORTo3Yrx+gy34hgVeZYQVp5Y3I
+P6zVCcbfgq/n1zc+ujahlk0EF073ATnPtmFwm3DXCnl9gkkfROnuzzJ2NOOO
+7q5EK+s3UGEs9X7c2IxdrIwKI3ovfHY5t1zfuwUTh3uPvPbrgbDLm51Xtrdg
+gVmc8+XwbhB88mpW+LdijKuH9+o/ukBy9kcxtrXilsXlyff/7gSDPeHbgvaK
+cK6WHxrzsAO2ruuy+K5bhCvL6hwbu0nINwh1O94rQosk5iklScLHyV7/yj4R
+Wrcue2P6ioQageScw+BS5zGFUS0kMKJHtSZyEfb0ezAMq0nYydO+UsyKMDk3
+vyOgkIRgH5ML160JPJ40mjoeRkLV5tySXlsCVRxd7tp9JJhZmT9ba0cgy9a4
+ihFMQo/KUpfuQKDnBbTN8SUh7MoGVqILgUJuV5EHg4TIAVcIwKU/ssQ924aE
+xhZeWIYXgbZFSsc6GglfcbecaNpJoK/3dieZOQmyM98+8NhDYL5S8guDSsJv
+G2GdUxCBs7l+gRMLYnhpItwWGULgsnAez2xeDPR5r6AboQRSOTR7nBHDVPvu
+DNNwAs0OTNML1GIIrBaVBhxc6sro1galGLg3fxJkMJd+VX/8lFwMay62SZoO
+ETgfEepoNSaG3xMCZhZZBI57dyp2DYnhPy4Bfrw=
+     "]]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{
+    FormBox["\"Altitude (m)\"", TraditionalForm], 
+    FormBox["\"Thrust Fraction\"", TraditionalForm]},
+  AxesOrigin->{0, 0.3},
+  PlotRange->{{0, 13000}, {0.263688544580019, 0.9999999838426837}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], 
+    Scaled[0.02]}]], "Output",
+ CellChangeTimes->{{3.573071179063344*^9, 3.573071205091425*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell["Constraints", "Subtitle",
+ CellChangeTimes->{{3.57306778136931*^9, 3.5730677865425587`*^9}}]
+}, Open  ]]
+},
+WindowSize->{Full, Full},
+WindowMargins->{{3, Automatic}, {Automatic, 0}},
+PrintingCopies->1,
+PrintingPageRange->{1, Automatic},
+PrivateNotebookOptions->{"VersionedStylesheet"->{"Default.nb"[8.] -> False}},
+Magnification->2.,
+FrontEndVersion->"10.4 for Mac OS X x86 (32-bit, 64-bit Kernel) (April 11, \
+2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 100, 1, 182, "Title"],
+Cell[670, 25, 98, 1, 101, "Subtitle"],
+Cell[CellGroupData[{
+Cell[793, 30, 101, 1, 127, "Section"],
+Cell[897, 33, 420, 7, 250, "Text"],
+Cell[CellGroupData[{
+Cell[1342, 44, 112, 1, 87, "Subsection"],
+Cell[1457, 47, 508, 8, 402, "Text"],
+Cell[CellGroupData[{
+Cell[1990, 59, 309, 8, 56, "Input"],
+Cell[2302, 69, 186, 4, 61, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2525, 78, 260, 7, 56, "Input"],
+Cell[2788, 87, 177, 4, 56, "Output"]
+}, Open  ]],
+Cell[2980, 94, 804, 12, 212, "Text"],
+Cell[3787, 108, 477, 12, 56, "Input"],
+Cell[4267, 122, 478, 12, 56, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4782, 139, 109, 1, 87, "Subsection"],
+Cell[4894, 142, 302, 6, 98, "Text"],
+Cell[5199, 150, 457, 12, 56, "Input"],
+Cell[5659, 164, 460, 12, 56, "Input"],
+Cell[6122, 178, 425, 9, 56, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6584, 192, 99, 1, 87, "Subsection"],
+Cell[6686, 195, 884, 23, 123, "Input"],
+Cell[CellGroupData[{
+Cell[7595, 222, 714, 19, 90, "Input"],
+Cell[8312, 243, 2390, 44, 435, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10763, 294, 153, 2, 101, "Subtitle"],
+Cell[CellGroupData[{
+Cell[10941, 300, 151, 2, 127, "Section"],
+Cell[11095, 304, 1006, 15, 326, "Text"],
+Cell[12104, 321, 524, 9, 174, "Text"],
+Cell[12631, 332, 603, 13, 56, "Input"],
+Cell[13237, 347, 627, 10, 136, "Text"],
+Cell[13867, 359, 991, 23, 54, "Text"],
+Cell[CellGroupData[{
+Cell[14883, 386, 171, 3, 56, "Input"],
+Cell[15057, 391, 317, 11, 100, "Output"]
+}, Open  ]],
+Cell[15389, 405, 182, 4, 60, "Text"],
+Cell[CellGroupData[{
+Cell[15596, 413, 167, 3, 56, "Input"],
+Cell[15766, 418, 74, 1, 56, "Output"]
+}, Open  ]],
+Cell[15855, 422, 119, 1, 60, "Text"],
+Cell[CellGroupData[{
+Cell[15999, 427, 144, 3, 56, "Input"],
+Cell[16146, 432, 75, 1, 56, "Output"]
+}, Open  ]],
+Cell[16236, 436, 577, 10, 60, "Text"],
+Cell[16816, 448, 798, 22, 90, "Input"],
+Cell[CellGroupData[{
+Cell[17639, 474, 169, 3, 56, "Input"],
+Cell[17811, 479, 428, 14, 139, "Output"]
+}, Open  ]],
+Cell[18254, 496, 108, 1, 60, "Text"],
+Cell[CellGroupData[{
+Cell[18387, 501, 168, 3, 56, "Input"],
+Cell[18558, 506, 111, 1, 56, "Output"]
+}, Open  ]],
+Cell[18684, 510, 249, 5, 98, "Text"],
+Cell[CellGroupData[{
+Cell[18958, 519, 170, 3, 56, "Input"],
+Cell[19131, 524, 88, 1, 56, "Output"]
+}, Open  ]],
+Cell[19234, 528, 177, 2, 60, "Text"],
+Cell[19414, 532, 843, 21, 90, "Input"],
+Cell[CellGroupData[{
+Cell[20282, 557, 308, 7, 56, "Input"],
+Cell[20593, 566, 856, 26, 149, "Output"]
+}, Open  ]],
+Cell[21464, 595, 329, 6, 98, "Text"],
+Cell[21796, 603, 881, 19, 90, "Input"],
+Cell[CellGroupData[{
+Cell[22702, 626, 284, 6, 56, "Input"],
+Cell[22989, 634, 1030, 31, 125, "Output"]
+}, Open  ]],
+Cell[24034, 668, 300, 6, 98, "Text"],
+Cell[24337, 676, 1054, 23, 90, "Input"],
+Cell[25394, 701, 156, 2, 60, "Text"],
+Cell[CellGroupData[{
+Cell[25575, 707, 282, 6, 56, "Input"],
+Cell[25860, 715, 1467, 43, 245, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[27364, 763, 509, 9, 56, "Input"],
+Cell[27876, 774, 616, 11, 74, "Message"],
+Cell[28495, 787, 406, 5, 56, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28950, 798, 193, 3, 127, "Section"],
+Cell[29146, 803, 292, 6, 60, "Text"],
+Cell[29441, 811, 551, 12, 56, "Input"],
+Cell[29995, 825, 658, 10, 98, "Text"],
+Cell[CellGroupData[{
+Cell[30678, 839, 343, 8, 56, "Input"],
+Cell[31024, 849, 321, 8, 83, "Output"]
+}, Open  ]],
+Cell[31360, 860, 157, 3, 60, "Text"],
+Cell[31520, 865, 490, 11, 56, "Input"],
+Cell[32013, 878, 106, 1, 60, "Text"],
+Cell[CellGroupData[{
+Cell[32144, 883, 429, 10, 56, "Input"],
+Cell[32576, 895, 262, 6, 61, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[32875, 906, 377, 9, 56, "Input"],
+Cell[33255, 917, 2283, 44, 416, "Output"]
+}, Open  ]],
+Cell[35553, 964, 336, 6, 98, "Text"],
+Cell[CellGroupData[{
+Cell[35914, 974, 414, 10, 90, "Input"],
+Cell[36331, 986, 2240, 43, 410, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[38610, 1034, 98, 1, 101, "Subtitle"]
+}, Open  ]]
+}
+]
+*)
+
